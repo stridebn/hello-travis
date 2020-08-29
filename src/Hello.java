@@ -7,7 +7,7 @@ public class Hello {
 		else {
 			personalizedMessage(args[0]);
 		}
-	}
+	
 	static void defaultMessage() {
 		System.out.println("Hello, Jay.");
 	}
