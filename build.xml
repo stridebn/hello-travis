@@ -1,0 +1,56 @@
+<project name="Hello" default="test" basedir=".">
+  <description>
+    simple example build file for hello+travis project
+  </description>
+  <!-- set global properties for this build -->
+  <property name="src" location="src"/>
+  <path id="classpath">
+      <fileset dir="." includes="junit-platform-console-standalone-1.2.0.jar"/>
+  </path>
+
+  <target name="init">
+    <!-- Create the time stamp -->
+    <tstamp/>
+  </target>
+
+  <target name="compile" depends="init"
+        description="compile the source">
+    <!-- Compile the Java code from ${src} into ${build} -->
+    <javac srcdir="${src}" destdir="${src}" classpathref="classpath"/>
+  </target>
+
+  <target name="run" depends="compile"
+        description="run the main">
+    <java fork="true" dir="./src" classname="Hello">
+      <classpath>
+        <path location="./src"/>
+      </classpath>
+    </java>
+  </target>
+
+  <target name="run2" depends="compile"
+        description="run the main with arg">
+    <java fork="true" dir="./src" classname="Hello">
+      <arg value="Bob"/>
+      <classpath>
+        <path location="./src"/>
+      </classpath>
+    </java>
+  </target>
+
+  <target name="test" depends="compile"
+        description="run the tests">
+    <java fork="true" dir="./src" classname="org.junit.platform.console.ConsoleLauncher" failonerror="true">
+      <arg value="--scan-class-path"/>
+      <classpath>
+        <path location="./src"/>
+        <path location="./junit-platform-console-standalone-1.2.0.jar"/>
+      </classpath>
+    </java>
+  </target>
+
+  <target name="clean"
+        description="clean up">
+    <!-- Delete the ${build} and ${dist} directory trees -->
+  </target>
+</project>
